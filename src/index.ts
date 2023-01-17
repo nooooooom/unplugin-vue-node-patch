@@ -35,7 +35,7 @@ export default createUnplugin<Options | undefined>((options = {}) => {
       }
 
       const [filepath] = id.split('?')
-      if (filepath.startsWith('.jsx') || filepath.startsWith('.tsx')) {
+      if (filepath.endsWith('.jsx') || filepath.endsWith('.tsx')) {
         context.type = 'jsx'
       } else if (!filepath.endsWith('.vue')) {
         return code

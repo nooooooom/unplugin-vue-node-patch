@@ -14,10 +14,15 @@ export function parseTemplate(
     (child) => child.type === 1 /** NodeTypes.ELEMENT */ && child.tag === 'template'
   )
 
+  let ignoreTemplate = true
   const transformContext = createTransformContext(root, {
     nodeTransforms: [
       (node) => {
         if (node.type === 1) {
+          if (ignoreTemplate && node.tag === 'template') {
+            ignoreTemplate = false
+            return
+          }
           const patch = createPatch()
           result.push({
             tag: node.tag,
