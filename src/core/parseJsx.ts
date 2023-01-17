@@ -16,7 +16,6 @@ export function parseJsx(
     babelrc: false,
     plugins: [jsx, [typescript, { isTSX: true, allowExtensions: true }]]
   })
-  console.log(ast)
   traverse(ast, {
     enter({ node }) {
       if (node.type === 'JSXElement') {

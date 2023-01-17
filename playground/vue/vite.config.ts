@@ -6,6 +6,8 @@ import Inspect from 'vite-plugin-inspect'
 import Unplugin from '../../src/vite'
 // @ts-ignore
 import { markElementLocation } from '../../src/middlewares/markElementLocation'
+// @ts-ignore
+import { markComponentPath } from '../../src/middlewares/markComponentPath'
 
 export default defineConfig({
   plugins: [
@@ -13,13 +15,7 @@ export default defineConfig({
     VueJsx(),
     Inspect(),
     Unplugin({
-      middlewares: [
-        (pacth, node) => {
-          pacth.props.set('a', 1)
-          return pacth
-        },
-        markElementLocation
-      ]
+      middlewares: [markElementLocation, markComponentPath]
     })
   ]
 })
