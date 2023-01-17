@@ -1,4 +1,4 @@
-import { BaseElementNode } from '@vue/compiler-dom'
+import type { BaseElementNode } from '@vue/compiler-dom'
 import type { Node as BabelNode } from '@babel/core'
 
 export interface Patch {
