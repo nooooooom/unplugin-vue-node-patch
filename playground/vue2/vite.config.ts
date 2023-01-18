@@ -1,5 +1,5 @@
-import Vue from '@vitejs/plugin-vue'
-import VueJsx from '@vitejs/plugin-vue-jsx'
+import Vue from '@vitejs/plugin-vue2'
+import VueJsx from '@vitejs/plugin-vue2-jsx'
 import { resolve } from 'node:path'
 import { defineConfig, normalizePath } from 'vite'
 // @ts-ignore
