@@ -1,25 +1,24 @@
 import type { Middleware } from '../types'
 
-export const ELEMENT_LOCATION_ATTR = 'data-element-position'
+export const ELEMENT_LOCATION_ATTR = 'data-element-location'
 
 export interface MarkElementLocationOptions {
-  formatLocation?: (line: number, loc: number) => string
+  /**
+   * Specifies the format of the location presented
+   *
+   * @default (line: number, loc: number) => `${line}_${column}`
+   */
+  formatter?: (line: number, loc: number) => string
 }
 
-const defaultFormatLocation = <Required<MarkElementLocationOptions>['formatLocation']>((
-  line,
-  column
-) => {
+const defaultFormatter = <Required<MarkElementLocationOptions>['formatter']>((line, column) => {
   return `${line}_${column}`
 })
 
 export const markElementLocation = (options: MarkElementLocationOptions = {}) => {
-  const formatLocation = options.formatLocation || defaultFormatLocation
+  const formatter = options.formatter || defaultFormatter
 
   return <Middleware>((patch, node) => {
-    patch.props.set(
-      ELEMENT_LOCATION_ATTR,
-      formatLocation(node.loc!.start.line, node.loc!.start.column)
-    )
+    patch.props.set(ELEMENT_LOCATION_ATTR, formatter(node.loc!.start.line, node.loc!.start.column))
   })
 }
