@@ -19,7 +19,7 @@ export default defineConfig({
       filterNode: 'a',
       middlewares: [
         markComponentPath({
-          normalizePath: (path) => {
+          formatter: (path) => {
             return path.replace(rootDir, '')
           }
         }),
