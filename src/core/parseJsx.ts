@@ -2,14 +2,11 @@ import { parse, traverse } from '@babel/core'
 import jsx from '@vue/babel-plugin-jsx'
 // @ts-ignore missing type
 import typescript from '@babel/plugin-transform-typescript'
-import { JSXElementNode, Middleware, MiddlewareContext, ParseResult } from '../types'
+import { JSXElementNode, ParseContext, ParseResult } from '../types'
 import { createPatch } from './createPatch'
 
-export function parseJsx(
-  code: string,
-  middleware: Middleware,
-  context: MiddlewareContext
-): ParseResult {
+export function parseJsx(code: string, context: ParseContext): ParseResult {
+  const { nodeFilter, middleware, middlewareContext } = context
   const result = <ParseResult>[]
 
   const ast = parse(code, {
@@ -18,12 +15,12 @@ export function parseJsx(
   })
   traverse(ast, {
     enter({ node }) {
-      if (node.type === 'JSXElement') {
+      if (node.type === 'JSXElement' && nodeFilter(node)) {
         const patch = createPatch()
         result.push({
           tag: resolveElementTag(node.openingElement.name),
           start: node.start!,
-          patch: middleware(createPatch(), node, context) || patch
+          patch: middleware(createPatch(), node, middlewareContext) || patch
         })
       }
     }

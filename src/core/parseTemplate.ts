@@ -1,12 +1,9 @@
 import { createTransformContext, parse, traverseNode } from '@vue/compiler-dom'
-import { Middleware, MiddlewareContext, ParseResult } from '../types'
+import { ParseContext, ParseResult } from '../types'
 import { createPatch } from './createPatch'
 
-export function parseTemplate(
-  code: string,
-  middleware: Middleware,
-  context: MiddlewareContext
-): ParseResult {
+export function parseTemplate(code: string, context: ParseContext): ParseResult {
+  const { nodeFilter, middleware, middlewareContext } = context
   const result = <ParseResult>[]
 
   const root = parse(code)
@@ -18,7 +15,7 @@ export function parseTemplate(
   const transformContext = createTransformContext(root, {
     nodeTransforms: [
       (node) => {
-        if (node.type === 1) {
+        if (node.type === 1 && nodeFilter(node)) {
           if (ignoreTemplate && node.tag === 'template') {
             ignoreTemplate = false
             return
@@ -27,7 +24,7 @@ export function parseTemplate(
           result.push({
             tag: node.tag,
             start: node.loc.start.offset,
-            patch: middleware(patch, node, context) || patch
+            patch: middleware(patch, node, middlewareContext) || patch
           })
         }
       }

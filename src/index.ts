@@ -1,10 +1,11 @@
 import { createUnplugin } from 'unplugin'
 import { createFilter } from '@rollup/pluginutils'
-import { MiddlewareContext, Options } from './types'
+import { MiddlewareContext, Options, ParseContext } from './types'
 import { composeMiddlewares } from './utils/composeMiddlewares'
 import { parseTemplate } from './core/parseTemplate'
 import { parseJsx } from './core/parseJsx'
 import { transform } from './core/transform'
+import { createNodeFilter } from './utils/createNodeFilter'
 
 export { isJSXElement, isTemplateNode } from './utils/assert'
 export { composeMiddlewares } from './utils/composeMiddlewares'
@@ -13,9 +14,10 @@ export const VUE_SFC_REGEX = /\.vue$/
 export const JSX_REGEX = /.[jt]sx$/
 
 export default createUnplugin<Options | undefined>((options = {}) => {
-  const { include = [VUE_SFC_REGEX, JSX_REGEX], exclude, middlewares = [] } = options
+  const { include = [VUE_SFC_REGEX, JSX_REGEX], exclude, filterNode, middlewares = [] } = options
 
   const filter = createFilter(include, exclude)
+  const nodeFilter = createNodeFilter(filterNode)
   const middleware = composeMiddlewares(...middlewares)
 
   return {
@@ -28,15 +30,20 @@ export default createUnplugin<Options | undefined>((options = {}) => {
     },
 
     transform(code, id) {
-      const context: MiddlewareContext = {
+      const middlewareContext: MiddlewareContext = {
         id,
         code,
         type: 'template'
       }
+      const parseContext: ParseContext = {
+        nodeFilter,
+        middleware,
+        middlewareContext
+      }
 
       const [filepath] = id.split('?')
       if (filepath.endsWith('.jsx') || filepath.endsWith('.tsx')) {
-        context.type = 'jsx'
+        middlewareContext.type = 'jsx'
       } else if (!filepath.endsWith('.vue')) {
         return code
       }
@@ -45,9 +52,9 @@ export default createUnplugin<Options | undefined>((options = {}) => {
       // e.g. defineNodePatch<T>(input: T, type: 'template' | 'jsx'): T
 
       const parseResult =
-        context.type === 'template'
-          ? parseTemplate(code, middleware, context)
-          : parseJsx(code, middleware, context)
+        middlewareContext.type === 'template'
+          ? parseTemplate(code, parseContext)
+          : parseJsx(code, parseContext)
 
       return transform(code, parseResult)
     }

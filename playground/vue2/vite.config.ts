@@ -16,6 +16,7 @@ export default defineConfig({
     Vue(),
     VueJsx(),
     Unplugin({
+      filterNode: 'a',
       middlewares: [
         markComponentPath({
           normalizePath: (path) => {

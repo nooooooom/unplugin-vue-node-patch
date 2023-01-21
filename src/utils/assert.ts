@@ -5,5 +5,9 @@ export function isTemplateNode(node: unknown): node is TemplateElementNode {
 }
 
 export function isJSXElement(node: unknown): node is JSXElementNode {
-  return typeof node === 'object' && node !== null && (node as any).type === 'JSXElement'
+  return (
+    typeof node === 'object' &&
+    node !== null &&
+    (node as any).type === 'JSXElement'
+  )
 }
