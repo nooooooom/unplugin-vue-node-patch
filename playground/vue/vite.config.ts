@@ -5,9 +5,7 @@ import { defineConfig, normalizePath } from 'vite'
 // @ts-ignore
 import Unplugin from '../../src/vite'
 // @ts-ignore
-import { markElementLocation } from '../../src/middlewares/markElementLocation'
-// @ts-ignore
-import { markComponentPath } from '../../src/middlewares/markComponentPath'
+import { markElementLocation, markComponentPath } from '../../src/middlewares'
 
 const rootDir = normalizePath(resolve(__dirname, './'))
 

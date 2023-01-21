@@ -12,5 +12,8 @@
     {
       "path": "./tsconfig.config.json"
     }
-  ]
+  ],
+  "vueCompilerOptions": {
+    "target": 2.7
+  }
 }

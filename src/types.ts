@@ -42,6 +42,8 @@ export type ParseResult = PatchInfo[]
 export interface Options {
   /**
    * RegExp or glob to match files to be transformed
+   * 
+   * @default [/\.vue$/, /.[jt]sx$/]
    */
   include?: string | RegExp | (string | RegExp)[]
 
@@ -55,5 +57,8 @@ export interface Options {
    */
   filterNode?: string | RegExp | (string | RegExp)[] | NodeFilter
 
+  /**
+   * Define your patch
+   */
   middlewares?: Middleware[]
 }
