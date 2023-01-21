@@ -1,6 +1,6 @@
 {
   "name": "unplugin-vue-node-patch",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Monkey patching node in vue template or jsx",
   "repository": {
     "type": "git",
@@ -76,7 +76,8 @@
   "author": "nooooooom <https://github.com/nooooooom>",
   "license": "MIT",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "prepublish": "pnpm build"
   },
   "dependencies": {
     "@babel/core": "^7.20.7",
