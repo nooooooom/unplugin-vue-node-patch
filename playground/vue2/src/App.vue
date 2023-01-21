@@ -4,16 +4,18 @@ import Logo from './components/Logo'
 </script>
 
 <template>
-  <header>
-    <Logo />
+  <div id="app">
+    <header>
+      <Logo />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+      <div class="wrapper">
+        <HelloWorld msg="You did it!" />
+      </div>
+    </header>
+  </div>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
 }

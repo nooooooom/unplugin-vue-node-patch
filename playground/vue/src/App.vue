@@ -13,7 +13,7 @@ import Logo from './components/Logo'
   </header>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
 }
