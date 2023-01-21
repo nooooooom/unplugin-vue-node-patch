@@ -7,9 +7,14 @@ export function parseTemplate(code: string, context: ParseContext): ParseResult 
   const result = <ParseResult>[]
 
   const root = parse(code)
-  root.children.filter(
+  const templateBlocks = root.children.filter(
     (child) => child.type === 1 /** NodeTypes.ELEMENT */ && child.tag === 'template'
   )
+  if (!templateBlocks.length) {
+    return result
+  }
+
+  root.children = templateBlocks
 
   let ignoreTemplate = true
   const transformContext = createTransformContext(root, {

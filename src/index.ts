@@ -41,8 +41,10 @@ export default createUnplugin<Options | undefined>((options = {}) => {
         middlewareContext
       }
 
-      const [filepath] = id.split('?')
-      if (filepath.endsWith('.jsx') || filepath.endsWith('.tsx')) {
+      const [filepath] = id.split('?', 2)
+      // use id for script blocks in Vue SFCs (e.g. `App.vue?vue&type=script&lang.jsx`)
+      // use filepath for plain jsx files (e.g. App.jsx)
+      if (id.endsWith('.jsx') || id.endsWith('.tsx')) {
         middlewareContext.type = 'jsx'
       } else if (!filepath.endsWith('.vue')) {
         return code
