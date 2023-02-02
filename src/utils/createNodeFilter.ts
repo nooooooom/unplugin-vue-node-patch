@@ -20,6 +20,6 @@ export function createNodeFilter(filterNode: Options['filterNode']) {
   const matchers = (Array.isArray(filterNode) ? filterNode : [filterNode]).map(createMatcher)
   return (node: ElementNode) => {
     const tag = isTemplateNode(node) ? node.tag : node.type
-    return matchers.some((macther) => macther(tag))
+    return matchers.some((matcher) => matcher(tag))
   }
 }

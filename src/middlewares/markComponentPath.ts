@@ -24,8 +24,8 @@ export const markComponentPath = (options: MarkComponentPathOptions = {}) => {
   const { cleanPath = true, formatter } = options
 
   return <Middleware>((patch, node, context) => {
-    const filaname = cleanPath ? context.id.split('?', 2)[0] : context.id
-    const path = normalizePath(resolveAbsolutePath(filaname))
+    const filename = cleanPath ? context.id.split('?', 2)[0] : context.id
+    const path = normalizePath(resolveAbsolutePath(filename))
     patch.props.set(COMPONENT_PATH_ATTR, formatter ? formatter(path, node) : path)
   })
 }
