@@ -57,6 +57,11 @@
       "require": "./dist/utils.cjs",
       "import": "./dist/utils.js"
     },
+    "./middlewares": {
+      "types": "./dist/middlewares/index.d.ts",
+      "require": "./dist/middlewares/index.cjs",
+      "import": "./dist/middlewares/index.js"
+    },
     "./*": "./*"
   },
   "main": "dist/index.cjs",
