@@ -1,6 +1,6 @@
 {
   "name": "unplugin-vue-node-patch",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Monkey patching node in vue template or jsx",
   "repository": {
     "type": "git",
