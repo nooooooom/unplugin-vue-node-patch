@@ -82,7 +82,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
-    "prepublish": "pnpm build"
+    "prepublish": "pnpm build",
+    "release": "bumpp package.json --commit --push --tag && pnpm publish --access public"
   },
   "dependencies": {
     "@babel/core": "^7.20.7",
@@ -91,6 +92,7 @@
     "@rollup/pluginutils": "^5.0.2",
     "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/compiler-dom": "^3.2.45",
+    "bumpp": "^8.2.1",
     "magic-string": "^0.27.0",
     "rollup": "^3.10.0",
     "unplugin": "^1.0.1"
